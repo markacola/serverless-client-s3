@@ -112,8 +112,11 @@ module.exports = function(S) {
         return BbPromise.reject(new SError('Please specify a bucket name for the client in s-project.json'));
       }
 
-      _this.bucketName = populatedProject.custom.client.bucketName;
-      _this.clientPath = path.join(_this.project.getRootPath(), 'client', 'dist');
+      _this.bucketName    = populatedProject.custom.client.bucketName;
+      _this.clientPath    = path.join(_this.project.getRootPath(), 'client', 'dist');
+      _this.indexDocument = populatedProject.custom.client.indexDocument || 'index.html';
+      _this.errorDocument = populatedProject.custom.client.errorDocument || 'error.html';
+      _this.routingRules  = populatedProject.custom.client.routingRules || null;
 
       return BbPromise.resolve();
     }
@@ -181,8 +184,9 @@ module.exports = function(S) {
           let params = {
             Bucket: _this.bucketName,
             WebsiteConfiguration: {
-              IndexDocument: { Suffix: 'index.html' },
-              ErrorDocument: { Key: 'error.html' }
+              IndexDocument: { Suffix: _this.indexDocument },
+              ErrorDocument: { Key: _this.errorDocument },
+              RoutingRules: _this.routingRules,
             }
           };
           return _this.aws.request('S3', 'putBucketWebsite', params, _this.evt.options.stage, _this.evt.options.region)
