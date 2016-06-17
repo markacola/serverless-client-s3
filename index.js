@@ -99,9 +99,9 @@ module.exports = function(S) {
       }
 
       // make sure region exists in stage
-      if (!S.getProject().validateRegionExists(_this.evt.options.stage, _this.evt.options.region)) {
-        return BbPromise.reject(new SError('Region "' + _this.evt.options.region + '" does not exist in stage "' + _this.evt.options.stage + '"'));
-      }
+      //if (!S.getProject().validateRegionExists(_this.evt.options.stage, _this.evt.options.region)) {
+      //  return BbPromise.reject(new SError('Region "' + _this.evt.options.region + '" does not exist in stage "' + _this.evt.options.stage + '"'));
+      //}
 
       _this.project    = S.getProject();
       _this.aws        = S.getProvider('aws');
